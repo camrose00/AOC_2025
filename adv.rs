@@ -12,11 +12,9 @@ fn has_roll(grid: &Vec<Vec<char>>, row: usize, col: usize) -> isize {
 fn count_adj(grid: &Vec<Vec<char>>, row: isize, col:isize, max:isize) -> i32{
     let mut rolls = 0;
     let spots = vec![(row - 1, col - 1), (row - 1, col), (row - 1, col + 1), (row, col -1), (row, col + 1), (row + 1, col - 1), (row + 1, col), (row + 1, col + 1)];
-
     for (row, col) in spots{
         rolls += has_roll(grid, row as usize, col as usize);
     }
-   
     return (rolls < max) as i32;
 }
 
@@ -29,16 +27,14 @@ fn main() -> io::Result<()> {
         let row: Vec<char> = line.chars().collect();
         grid.push(row);
     }
-
     let mut allowed = 0;
-
     for row in 0..grid.len(){
         for col in 0..grid[row].len(){
-            if grid[row][col] != '@'{continue;}
-            allowed += count_adj(&grid, row as isize, col as isize, 4);
+            if grid[row][col] == '@'{
+                allowed += count_adj(&grid, row as isize, col as isize, 4);
+            }
         }
     }
     println!("Allowed {}", allowed);
-
     return Ok(());
 }
